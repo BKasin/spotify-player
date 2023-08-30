@@ -1074,7 +1074,7 @@ impl Client {
         let album_uri = album_id.uri();
         tracing::info!("Get album context: {}", album_uri);
 
-        let album = self.spotify.album(album_id).await?;
+        let album = self.spotify.album(album_id, None).await?;
         let first_page = album.tracks.clone();
 
         // converts `rspotify_model::FullAlbum` into `state::Album`
@@ -1111,7 +1111,7 @@ impl Client {
             .spotify
             .artist_top_tracks(
                 artist_id.as_ref(),
-                rspotify_model::enums::misc::Market::FromToken,
+                Some(rspotify_model::enums::misc::Market::FromToken),
             )
             .await?
             .into_iter()
